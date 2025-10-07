@@ -1,0 +1,147 @@
+{% extends "Base.html" %}
+{% block title %}Formulario - Encuesta Anónima{% endblock %}
+
+{% block content %}
+<div class="bg-gray-800 bg-opacity-90 rounded-2xl shadow-2xl p-6 sm:p-8 w-full max-w-3xl">
+  <h2 class="text-center text-2xl font-bold text-white mb-6">Formulario de Encuesta</h2>
+  
+  <form method="POST" class="space-y-6">
+
+    <!-- Bloque 1: Preferencias de modalidad -->
+    <div class="space-y-4">
+      <h3 class="text-lg font-semibold text-yellow-400">Bloque 1: Preferencias de modalidad</h3>
+      
+      <div>
+        <label class="block text-white mb-1">¿Qué modalidad de trabajo prefieres actualmente?</label>
+        <select name="modalidad" class="w-full rounded-lg p-2 bg-gray-900 text-white" required>
+          <option value="">Seleccione...</option>
+          <option>100% presencial</option>
+          <option>Híbrido</option>
+          <option>100% remoto</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-white mb-1">¿Qué porcentaje de tu tiempo estarías dispuesto a trabajar de manera presencial?</label>
+        <select name="porcentaje" class="w-full rounded-lg p-2 bg-gray-900 text-white" required>
+          <option value="">Seleccione...</option>
+          <option>0%</option>
+          <option>25%</option>
+          <option>50%</option>
+          <option>75%</option>
+          <option>100%</option>
+        </select>
+      </div>
+
+      <div>
+        <span class="block text-white mb-1">¿Qué aspectos valoras más del trabajo presencial? (selección múltiple)</span>
+        <div class="space-y-2">
+          <label class="flex items-center text-white">
+            <input type="checkbox" name="valor_presencial" value="Interacción con el equipo" class="mr-2">
+            Interacción con el equipo
+          </label>
+          <label class="flex items-center text-white">
+            <input type="checkbox" name="valor_presencial" value="Acceso a recursos físicos" class="mr-2">
+            Acceso a recursos físicos
+          </label>
+          <label class="flex items-center text-white">
+            <input type="checkbox" name="valor_presencial" value="Mayor coordinación" class="mr-2">
+            Mayor coordinación con otras áreas
+          </label>
+          <!-- "Otro" activador -->
+          <label class="flex items-center text-white">
+            <input type="checkbox" id="chkOtro" class="mr-2">
+            Otro (especificar)
+          </label>
+        </div>
+
+        <!-- Campo de texto oculto -->
+        <textarea id="txtOtro" name="otro_valor"
+          class="hidden mt-2 w-full rounded-lg p-2 bg-gray-900 text-white"
+          rows="2" placeholder="Especifique aquí..."></textarea>
+      </div>
+    </div>
+
+    <!-- Bloque 2: Motivación -->
+    <div class="space-y-4">
+      <h3 class="text-lg font-semibold text-yellow-400">Bloque 2: Impacto en motivación y permanencia</h3>
+
+      <div>
+        <label class="block text-white mb-1">El trabajo presencial influiría en mi decisión de permanecer en la compañía</label>
+        <select name="permanencia" class="w-full rounded-lg p-2 bg-gray-900 text-white" required>
+          <option>Totalmente de acuerdo</option>
+          <option>De acuerdo</option>
+          <option>Neutral</option>
+          <option>En desacuerdo</option>
+          <option>Totalmente en desacuerdo</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-white mb-1">¿Crees que una exigencia de trabajo 100% presencial aumentaría la posibilidad de deserción en el equipo?</label>
+        <select name="desercion" class="w-full rounded-lg p-2 bg-gray-900 text-white" required>
+          <option>Sí, mucho</option>
+          <option>Sí, en parte</option>
+          <option>No tendría impacto</option>
+          <option>No lo sé</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-white mb-1">¿Qué beneficios esperas recibir de la empresa si se implementa trabajo presencial?</label>
+        <textarea name="beneficios" class="w-full rounded-lg p-2 bg-gray-900 text-white" rows="2" placeholder="Escribe aquí..."></textarea>
+      </div>
+    </div>
+
+    <!-- Bloque 3: Movilidad -->
+    <div class="space-y-4">
+      <h3 class="text-lg font-semibold text-yellow-400">Bloque 3: Movilidad y tiempos</h3>
+
+      <div>
+        <label class="block text-white mb-1">¿Cuánto tiempo inviertes diariamente en desplazarte a la oficina?</label>
+        <select name="tiempo" class="w-full rounded-lg p-2 bg-gray-900 text-white" required>
+          <option>Menos de 30 min</option>
+          <option>30 min – 1 hora</option>
+          <option>1 – 2 horas</option>
+          <option>Más de 2 horas</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-white mb-1">¿Qué impacto tendría ese tiempo de movilidad en tu productividad y bienestar?</label>
+        <textarea name="impacto" class="w-full rounded-lg p-2 bg-gray-900 text-white" rows="2"></textarea>
+      </div>
+
+      <div>
+        <label class="block text-white mb-1">¿Qué medidas podrían facilitar tu traslado y reducir el impacto?</label>
+        <textarea name="medidas" class="w-full rounded-lg p-2 bg-gray-900 text-white" rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- Botón de envío -->
+    <div class="text-center">
+      <button type="submit" class="w-full bg-green-500 text-white py-2 rounded-lg font-bold hover:bg-green-400 transition">
+        Enviar Encuesta
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const chkOtro = document.getElementById("chkOtro");
+    const txtOtro = document.getElementById("txtOtro");
+
+    if (chkOtro) {
+      chkOtro.addEventListener("change", () => {
+        txtOtro.classList.toggle("hidden", !chkOtro.checked);
+        if (!chkOtro.checked) {
+          txtOtro.value = ""; // limpiar si lo desmarcan
+        }
+      });
+    }
+  });
+</script>
+{% endblock %}
