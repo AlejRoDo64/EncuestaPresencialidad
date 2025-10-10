@@ -1,45 +1,42 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% block title %}Encuesta Anónima{% endblock %}</title>
 
-    <!-- TailwindCSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     {% block head_extra %}{% endblock %}
   </head>
 
-  <body class="min-h-screen bg-gradient-to-r from-gray-900 to-gray-700 flex flex-col">
-    <!-- Header -->
-    <header class="bg-gray-800 text-white py-4 shadow-md">
-      <h1 class="text-center text-xl sm:text-2xl font-bold">Encuesta Presencialidad</h1>
+  <body class="min-h-screen bg-gray-100 flex flex-col">
+    <header class="bg-blue-600 text-white py-4 shadow-md">
+      <h1 class="text-center text-xl sm:text-2xl font-bold">
+        Encuesta Presencialidad
+      </h1>
     </header>
 
-    <!-- Contenido dinámico -->
     <main class="flex-1 flex items-center justify-center p-4">
       {% block content %}{% endblock %}
     </main>
-
-    <!-- Mensajes globales -->
     {% if mensaje %}
     <script>
       Swal.fire({
         icon: "{{ 'success' if '✅' in mensaje else 'error' }}",
         title: "{{ 'Éxito' if '✅' in mensaje else 'Error' }}",
         html: `<p class="mt-2 text-lg font-bold">{{ mensaje.replace("✅ ","").replace("❌ ","") }}</p>`,
-        background: "#1e1e1e",
-        color: "#fff",
-        confirmButtonColor: "{{ '#16a34a' if '✅' in mensaje else '#dc2626' }}",
+        background: "#fff",
+        color: "#333",
+        confirmButtonColor: "{{ '#2563eb' if '✅' in mensaje else '#dc2626' }}",
         confirmButtonText: "Aceptar",
         customClass: { popup: "rounded-2xl shadow-lg" }
+      }).then(() => {
+        {% if redirigir_login %}
+          window.location.href = "/";
+        {% endif %}
       });
     </script>
-    {% endif %}
-
-    {% block scripts %}{% endblock %}
+    {% endif %} {% block scripts %}{% endblock %}
   </body>
 </html>

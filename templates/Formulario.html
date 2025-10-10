@@ -2,125 +2,157 @@
 {% block title %}Formulario - Encuesta Anónima{% endblock %}
 
 {% block content %}
-<div class="bg-gray-800 bg-opacity-90 rounded-2xl shadow-2xl p-6 sm:p-8 w-full max-w-3xl">
-  <h2 class="text-center text-2xl font-bold text-white mb-6">Formulario de Encuesta</h2>
+<div class="bg-white border border-gray-200 rounded-2xl shadow-xl p-6 sm:p-8 w-full max-w-4xl">
+  <h2 class="text-center text-2xl font-bold text-gray-800 mb-6">Formulario de Encuesta</h2>
   
-  <form method="POST" class="space-y-6">
+  <form method="POST" id="encuestaForm" class="space-y-6 text-gray-800">
 
-    <!-- Bloque 1: Preferencias de modalidad -->
-    <div class="space-y-4">
-      <h3 class="text-lg font-semibold text-yellow-400">Bloque 1: Preferencias de modalidad</h3>
-      
-      <div>
-        <label class="block text-white mb-1">¿Qué modalidad de trabajo prefieres actualmente?</label>
-        <select name="modalidad" class="w-full rounded-lg p-2 bg-gray-900 text-white" required>
-          <option value="">Seleccione...</option>
-          <option>100% presencial</option>
-          <option>Híbrido</option>
-          <option>100% remoto</option>
-        </select>
-      </div>
-
-      <div>
-        <label class="block text-white mb-1">¿Qué porcentaje de tu tiempo estarías dispuesto a trabajar de manera presencial?</label>
-        <select name="porcentaje" class="w-full rounded-lg p-2 bg-gray-900 text-white" required>
-          <option value="">Seleccione...</option>
-          <option>0%</option>
-          <option>25%</option>
-          <option>50%</option>
-          <option>75%</option>
-          <option>100%</option>
-        </select>
-      </div>
-
-      <div>
-        <span class="block text-white mb-1">¿Qué aspectos valoras más del trabajo presencial? (selección múltiple)</span>
-        <div class="space-y-2">
-          <label class="flex items-center text-white">
-            <input type="checkbox" name="valor_presencial" value="Interacción con el equipo" class="mr-2">
-            Interacción con el equipo
-          </label>
-          <label class="flex items-center text-white">
-            <input type="checkbox" name="valor_presencial" value="Acceso a recursos físicos" class="mr-2">
-            Acceso a recursos físicos
-          </label>
-          <label class="flex items-center text-white">
-            <input type="checkbox" name="valor_presencial" value="Mayor coordinación" class="mr-2">
-            Mayor coordinación con otras áreas
-          </label>
-          <!-- "Otro" activador -->
-          <label class="flex items-center text-white">
-            <input type="checkbox" id="chkOtro" class="mr-2">
-            Otro (especificar)
-          </label>
-        </div>
-
-        <!-- Campo de texto oculto -->
-        <textarea id="txtOtro" name="otro_valor"
-          class="hidden mt-2 w-full rounded-lg p-2 bg-gray-900 text-white"
-          rows="2" placeholder="Especifique aquí..."></textarea>
-      </div>
+    <!-- 1 -->
+    <div>
+      <label class="block mb-1 font-medium">¿Cuántos años llevas trabajando en la empresa?</label>
+      <input type="number" name="anios_empresa" min="0" placeholder="Comenta tu respuesta"
+        class="w-full rounded-lg border-gray-300 p-2 focus:ring focus:ring-blue-300" required>
     </div>
 
-    <!-- Bloque 2: Motivación -->
-    <div class="space-y-4">
-      <h3 class="text-lg font-semibold text-yellow-400">Bloque 2: Impacto en motivación y permanencia</h3>
-
-      <div>
-        <label class="block text-white mb-1">El trabajo presencial influiría en mi decisión de permanecer en la compañía</label>
-        <select name="permanencia" class="w-full rounded-lg p-2 bg-gray-900 text-white" required>
-          <option>Totalmente de acuerdo</option>
-          <option>De acuerdo</option>
-          <option>Neutral</option>
-          <option>En desacuerdo</option>
-          <option>Totalmente en desacuerdo</option>
-        </select>
-      </div>
-
-      <div>
-        <label class="block text-white mb-1">¿Crees que una exigencia de trabajo 100% presencial aumentaría la posibilidad de deserción en el equipo?</label>
-        <select name="desercion" class="w-full rounded-lg p-2 bg-gray-900 text-white" required>
-          <option>Sí, mucho</option>
-          <option>Sí, en parte</option>
-          <option>No tendría impacto</option>
-          <option>No lo sé</option>
-        </select>
-      </div>
-
-      <div>
-        <label class="block text-white mb-1">¿Qué beneficios esperas recibir de la empresa si se implementa trabajo presencial?</label>
-        <textarea name="beneficios" class="w-full rounded-lg p-2 bg-gray-900 text-white" rows="2" placeholder="Escribe aquí..."></textarea>
-      </div>
+    <!-- 2 -->
+    <div>
+      <label class="block mb-1 font-medium">¿Qué tan justa consideras la decisión de retorno para todos los equipos?</label>
+      <select name="justicia" class="w-full rounded-lg border-gray-300 p-2 focus:ring focus:ring-blue-300" required>
+        <option value="">Seleccione una opción</option>
+        <option>Muy injusta</option>
+        <option>Injusta</option>
+        <option>Neutral</option>
+        <option>Justa</option>
+        <option>Muy justa</option>
+      </select>
     </div>
 
-    <!-- Bloque 3: Movilidad -->
-    <div class="space-y-4">
-      <h3 class="text-lg font-semibold text-yellow-400">Bloque 3: Movilidad y tiempos</h3>
-
-      <div>
-        <label class="block text-white mb-1">¿Cuánto tiempo inviertes diariamente en desplazarte a la oficina?</label>
-        <select name="tiempo" class="w-full rounded-lg p-2 bg-gray-900 text-white" required>
-          <option>Menos de 30 min</option>
-          <option>30 min – 1 hora</option>
-          <option>1 – 2 horas</option>
-          <option>Más de 2 horas</option>
-        </select>
-      </div>
-
-      <div>
-        <label class="block text-white mb-1">¿Qué impacto tendría ese tiempo de movilidad en tu productividad y bienestar?</label>
-        <textarea name="impacto" class="w-full rounded-lg p-2 bg-gray-900 text-white" rows="2"></textarea>
-      </div>
-
-      <div>
-        <label class="block text-white mb-1">¿Qué medidas podrían facilitar tu traslado y reducir el impacto?</label>
-        <textarea name="medidas" class="w-full rounded-lg p-2 bg-gray-900 text-white" rows="2"></textarea>
-      </div>
+    <!-- 3 -->
+    <div>
+      <label class="block mb-1 font-medium">¿Consideras que tu productividad se vería afectada con esta modalidad?</label>
+      <select name="productividad" class="w-full rounded-lg border-gray-300 p-2 focus:ring focus:ring-blue-300" required>
+        <option value="">Seleccione una opción</option>
+        <option>Disminuiría mucho</option>
+        <option>Disminuiría</option>
+        <option>Se mantendría igual</option>
+        <option>Aumentaría</option>
+        <option>Aumentaría mucho</option>
+      </select>
     </div>
 
-    <!-- Botón de envío -->
+    <!-- 4 -->
+    <div>
+      <label class="block mb-1 font-medium">¿En qué actividades consideras que el trabajo presencial aporta más valor?</label>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <label><input type="checkbox" name="valor_presencial_extra" value="Reuniones de coordinación" class="mr-2">Reuniones de coordinación</label>
+        <label><input type="checkbox" name="valor_presencial_extra" value="Innovación o sesiones de ideación" class="mr-2">Innovación o sesiones de ideación</label>
+        <label><input type="checkbox" name="valor_presencial_extra" value="Mentoría y acompañamiento" class="mr-2">Mentoría y acompañamiento</label>
+        <label><input type="checkbox" name="valor_presencial_extra" value="Comunicación con otras áreas" class="mr-2">Comunicación con otras áreas</label>
+        <label><input type="checkbox" name="valor_presencial_extra" value="Ninguna" class="mr-2">Ninguna</label>
+        <label><input type="checkbox" id="chkOtro2" class="mr-2">Otra (especificar)</label>
+      </div>
+      <textarea id="txtOtro2" name="otro_valor2" class="hidden mt-2 w-full rounded-lg border-gray-300 p-2" rows="2" placeholder="Comenta tu respuesta"></textarea>
+    </div>
+
+    <!-- 5 -->
+    <div>
+      <label class="block mb-1 font-medium">¿Qué tan alineado consideras el esquema 4x1 con la naturaleza de tus funciones?</label>
+      <select name="alineacion" class="w-full rounded-lg border-gray-300 p-2 focus:ring focus:ring-blue-300" required>
+        <option value="">Seleccione una opción</option>
+        <option>Muy alineado</option>
+        <option>Parcialmente alineado</option>
+        <option>Poco alineado</option>
+        <option>Nada alineado</option>
+      </select>
+    </div>
+
+    <!-- 6 -->
+    <div>
+      <label class="block mb-1 font-medium">¿Cuánto tiempo inviertes diariamente en desplazarte (ida y vuelta)?</label>
+      <select name="tiempo_total" class="w-full rounded-lg border-gray-300 p-2 focus:ring focus:ring-blue-300" required>
+        <option value="">Seleccione una opción</option>
+        <option>Menos de 1 hora</option>
+        <option>1 a 2 horas</option>
+        <option>2 a 3 horas</option>
+        <option>Más de 3 horas</option>
+      </select>
+    </div>
+
+    <!-- 7 -->
+    <div>
+      <label class="block mb-1 font-medium">¿Cómo afectaría este esquema tu balance entre vida personal y laboral?</label>
+      <select name="balance" class="w-full rounded-lg border-gray-300 p-2 focus:ring focus:ring-blue-300" required>
+        <option value="">Seleccione una opción</option>
+        <option>Lo afectaría mucho</option>
+        <option>Lo afectaría poco</option>
+        <option>No lo afectaría</option>
+      </select>
+    </div>
+
+    <!-- 8 -->
+    <div>
+      <label class="block mb-1 font-medium">¿Qué impacto tendría en tu salud física o mental?</label>
+      <select name="salud" class="w-full rounded-lg border-gray-300 p-2 focus:ring focus:ring-blue-300" required>
+        <option value="">Seleccione una opción</option>
+        <option>Muy negativo</option>
+        <option>Algo negativo</option>
+        <option>Neutral</option>
+        <option>Algo positivo</option>
+        <option>Muy positivo</option>
+      </select>
+    </div>
+
+    <!-- 9 -->
+    <div>
+      <label class="block mb-1 font-medium">¿Cómo se vería tu nivel de motivación general con el trabajo?</label>
+      <select name="motivacion" class="w-full rounded-lg border-gray-300 p-2 focus:ring focus:ring-blue-300" required>
+        <option value="">Seleccione una opción</option>
+        <option>Disminuiría mucho</option>
+        <option>Disminuiría</option>
+        <option>Se mantendría igual</option>
+        <option>Aumentaría</option>
+        <option>Aumentaría mucho</option>
+      </select>
+    </div>
+
+    <!-- 10 -->
+    <div>
+      <label class="block mb-1 font-medium">¿Qué condiciones o medidas podrían mejorar tu experiencia con el modelo 4x1?</label>
+      <textarea name="mejoras" class="w-full rounded-lg border-gray-300 p-2" rows="2" placeholder="Comenta tu respuesta"></textarea>
+    </div>
+
+    <!-- 11 -->
+    <div>
+      <label class="block mb-1 font-medium">¿Qué riesgos o inconvenientes percibes con este cambio?</label>
+      <textarea name="riesgos" class="w-full rounded-lg border-gray-300 p-2" rows="2" placeholder="Comenta tu respuesta"></textarea>
+    </div>
+
+    <!-- 12 -->
+    <div>
+      <label class="block mb-1 font-medium">¿El nuevo esquema afectaría tu intención de permanecer en la compañía?</label>
+      <select name="permanencia_empresa" class="w-full rounded-lg border-gray-300 p-2 focus:ring focus:ring-blue-300" required>
+        <option value="">Seleccione una opción</option>
+        <option>Sí</option>
+        <option>No</option>
+        <option>Aún no lo sé</option>
+      </select>
+    </div>
+
+    <!-- 13 -->
+    <div>
+      <label class="block mb-1 font-medium">¿Qué recomendaciones darías a la dirección para facilitar la transición y mantener la motivación del equipo?</label>
+      <textarea name="recomendaciones" class="w-full rounded-lg border-gray-300 p-2" rows="2" placeholder="Comenta tu respuesta"></textarea>
+    </div>
+
+    <!-- 14 -->
+    <div>
+      <label class="block mb-1 font-medium">¿Qué oportunidades o beneficios crees que puede traer el modelo 4x1?</label>
+      <textarea name="oportunidades" class="w-full rounded-lg border-gray-300 p-2" rows="2" placeholder="Comenta tu respuesta"></textarea>
+    </div>
+
+    <!-- Enviar -->
     <div class="text-center">
-      <button type="submit" class="w-full bg-green-500 text-white py-2 rounded-lg font-bold hover:bg-green-400 transition">
+      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold hover:bg-blue-500 transition">
         Enviar Encuesta
       </button>
     </div>
@@ -131,15 +163,12 @@
 {% block scripts %}
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const chkOtro = document.getElementById("chkOtro");
-    const txtOtro = document.getElementById("txtOtro");
-
-    if (chkOtro) {
-      chkOtro.addEventListener("change", () => {
-        txtOtro.classList.toggle("hidden", !chkOtro.checked);
-        if (!chkOtro.checked) {
-          txtOtro.value = ""; // limpiar si lo desmarcan
-        }
+    const chkOtro2 = document.getElementById("chkOtro2");
+    const txtOtro2 = document.getElementById("txtOtro2");
+    if (chkOtro2) {
+      chkOtro2.addEventListener("change", () => {
+        txtOtro2.classList.toggle("hidden", !chkOtro2.checked);
+        if (!chkOtro2.checked) txtOtro2.value = "";
       });
     }
   });
