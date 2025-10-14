@@ -37,15 +37,26 @@ df_users = load_excel_from_drive(ID_USERS)
 @app.route("/", methods=["GET", "POST"])
 def login():
     mensaje = ""
+    df_users = load_excel_from_drive(ID_USERS)  # recargar usuarios siempre
     if request.method == "POST":
         identificacion = request.form.get("identificacion")
         clave = request.form.get("clave")
-        if (identificacion in df_users["usuario"].astype(str).values and
-            clave == identificacion):
-            session["usuario"] = identificacion
-            return redirect("/formulario")
+
+        if identificacion in df_users["usuario"].astype(str).values:
+            usuario_row = df_users[df_users["usuario"].astype(str) == identificacion].iloc[0]
+
+            if clave == identificacion:
+                # Verificar si ya respondió
+                if str(usuario_row.get("estado", "")).lower() == "realizado":
+                    mensaje = "❌ Ya has completado la encuesta, no puedes volver a ingresar."
+                else:
+                    session["usuario"] = identificacion
+                    return redirect("/formulario")
+            else:
+                mensaje = "❌ Usuario o clave incorrectos"
         else:
-            mensaje = "❌ Usuario o clave incorrectos"
+            mensaje = "❌ Usuario no encontrado"
+
     return render_template("Login.html", mensaje=mensaje)
 
 @app.route("/formulario", methods=["GET", "POST"])
@@ -81,6 +92,17 @@ def formulario():
         fila = list(respuestas.values())
         append_to_excel(ID_RESPUESTAS, fila, headers)
 
+         # ✅ actualizar estado en hoja de usuarios
+        sh_users = gc.open_by_key(ID_USERS)
+        ws_users = sh_users.sheet1
+        users_data = ws_users.get_all_records()
+
+        for idx, row in enumerate(users_data, start=2):  # fila 1 son encabezados
+            if str(row["usuario"]) == session["usuario"]:
+                col_estado = list(row.keys()).index("estado") + 1
+                ws_users.update_cell(idx, col_estado, "realizado")
+                break
+        
         session.clear()
         return render_template("Base.html", mensaje="✅ Tu encuesta ha sido registrada con éxito.", redirigir_login=True)
 
